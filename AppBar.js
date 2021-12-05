@@ -1,6 +1,7 @@
 import React from "react";
-import { HStack, IconButton, Icon, Text, Box, StatusBar } from "native-base";
+import { HStack, IconButton, Icon, Text, Box, StatusBar, Menu, Divider, HamburgerIcon } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
+import { Pressable } from "react-native";
 
 const AppBar = () => {
     return (
@@ -11,7 +12,30 @@ const AppBar = () => {
     
             <HStack bg='#6200ee' px="1" py="3" justifyContent='space-between' alignItems='center'>
               <HStack space="4" alignItems='center'>
-                <IconButton icon={<Icon size="sm" as={<MaterialIcons name='menu' />} color="white" />} />
+              <Menu
+        w="190"
+        closeOnSelect={false}
+        onOpen={() => console.log("opened")}
+        onClose={() => console.log("closed")}
+        trigger={(triggerProps) => {
+          return (
+            <Pressable {...triggerProps}>
+              <HamburgerIcon />
+            </Pressable>
+          )
+        }}
+      >
+        <Menu.Group title="Free">
+          <Menu.Item>Arial</Menu.Item>
+          <Menu.Item>Nunito Sans</Menu.Item>
+          <Menu.Item>Roboto</Menu.Item>
+        </Menu.Group>
+        <Divider mt="3" w="100%" />
+        <Menu.Group title="Paid">
+          <Menu.Item>SF Pro</Menu.Item>
+          <Menu.Item>Helvetica</Menu.Item>
+        </Menu.Group>
+      </Menu>
                 <Text color="white" fontSize="20" fontWeight='bold'>Home</Text>
               </HStack>
               <HStack space="2">

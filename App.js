@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { Input,Flex, NativeBaseProvider, IconButton, Icon, Box, Text,HStack,Center,Pressable, } from "native-base"
+import { Input,Flex, NativeBaseProvider, IconButton, Icon, Box, Text,HStack,Center,Pressable, CloseIcon, } from "native-base"
 import { Feather } from "@expo/vector-icons"
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import AppBar from './AppBar'
@@ -15,6 +15,7 @@ export default function App() {
 
 
 
+
   const searchText = e => {
     setTaskName(e.target.value)
   }
@@ -25,6 +26,13 @@ export default function App() {
     alert('Added Successfully')
   }
 
+  const deleteTask = task =>{
+    const confirm = window.confirm('Wanna remove this task?')
+  if (confirm) {
+      const remTask = addTask.filter(eTask => eTask !== task)
+      setAddTask(remTask)
+    }
+  }
 
   useEffect(()=>{
     setAddNewTask(addTask.filter(task => task.toLowerCase().includes(taskName.toLowerCase())))
@@ -32,7 +40,7 @@ export default function App() {
 
 
 
-console.log(addTask)
+console.log(addNewTask)
 
   return (
     <NativeBaseProvider>
@@ -65,7 +73,22 @@ console.log(addTask)
           </Flex>
        <Box mx="5">
          {
-           addNewTask.map(task => <Text fontSize="2xl">{task}</Text>)
+           addNewTask.map(task => 
+             <Flex
+             bg="primary.200"
+             alignItems="center"
+             justifyContent="space-between"
+            direction="row"
+            p="3"
+            mb="2.5"
+            mt="1.5"
+            _text={{
+              color: "coolGray.800",
+            }}
+          >
+             <Text fontSize="2xl">{task} </Text><Text onPress={()=>deleteTask(task)} fontSize="2xl"><CloseIcon  size="4" /></Text>
+             </Flex>)
+             
          }
        </Box>
        <Box flex={1} bg="white" safeAreaTop>
